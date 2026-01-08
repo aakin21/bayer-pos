@@ -1,0 +1,95 @@
+═══════════════════════════════════════════════════════════════
+  BAYER POS - DATABASE GÜVENLİK KILAVUZU
+═══════════════════════════════════════════════════════════════
+
+✅ DATABASE KESINLIKLE KORUNUR!
+═══════════════════════════════════════════════════════════════
+
+📁 DATABASE KONUMU:
+───────────────────────────────────────────────────────────────
+Windows'ta database şu konumda saklanır:
+  %APPDATA%\com.bayer.pos\pos.db
+
+Tam yol örneği:
+  C:\Users\[KullanıcıAdı]\AppData\Roaming\com.bayer.pos\pos.db
+
+═══════════════════════════════════════════════════════════════
+  NEDEN GÜVENLİ?
+═══════════════════════════════════════════════════════════════
+
+1. ✅ AYRI KONUM
+   • Database: AppData klasöründe (kullanıcı verileri)
+   • Uygulama: Program Files klasöründe (uygulama dosyaları)
+   • Bunlar TAMAMEN AYRI konumlar!
+
+2. ✅ MSI INSTALLER SADECE UYGULAMA DOSYALARINI GÜNCELLER
+   • Installer sadece Program Files'taki dosyaları değiştirir
+   • AppData klasörüne DOKUNMAZ
+   • Database dosyası aynen kalır
+
+3. ✅ WINDOWS STANDARTI
+   • Tüm Windows uygulamaları böyle çalışır
+   • Kullanıcı verileri AppData'da korunur
+   • Bu Microsoft'un önerdiği yöntem
+
+═══════════════════════════════════════════════════════════════
+  GÜNCELLEME SIRASINDA NE OLUR?
+═══════════════════════════════════════════════════════════════
+
+1. Eski uygulama kapatılır
+2. Yeni .msi dosyası çalıştırılır
+3. Windows Program Files'taki eski dosyaları siler
+4. Yeni uygulama dosyalarını yükler
+5. AppData klasörüne HİÇBİR ŞEY YAPILMAZ
+6. Database dosyası aynen kalır
+7. Yeni uygulama açılır → Database'i bulur → Tüm veriler yerinde!
+
+═══════════════════════════════════════════════════════════════
+  EKSTRA GÜVENLİK İÇİN (İSTEĞE BAĞLI)
+═══════════════════════════════════════════════════════════════
+
+Eğer %100 emin olmak istersen, güncelleme öncesi yedek al:
+
+1. Database konumunu bul:
+   • Ayarlar ekranından görebilirsin
+   • Veya: %APPDATA%\com.bayer.pos\pos.db
+
+2. Yedek al:
+   • pos.db dosyasını kopyala
+   • Güvenli bir yere kaydet (USB, Cloud, vb.)
+
+3. Güncellemeyi yap
+
+4. Kontrol et:
+   • Uygulamayı aç
+   • Ürünlerin hala orada olduğunu gör
+   • Yedek dosyayı silebilirsin
+
+═══════════════════════════════════════════════════════════════
+  TEKNİK DETAYLAR
+═══════════════════════════════════════════════════════════════
+
+Kod içinde database konumu:
+  • Dosya: local-pos/src-tauri/src/main.rs
+  • Satır 9-12: app.path().app_data_dir() kullanılıyor
+  • Bu Tauri'nin standart yöntemi
+  • Her platformda doğru konumu otomatik bulur
+
+Database bağlantısı:
+  • Dosya: local-pos/src/lib/db/database.js
+  • Satır 32: Database.load('sqlite:pos.db')
+  • Tauri plugin otomatik olarak AppData'daki dosyayı bulur
+
+═══════════════════════════════════════════════════════════════
+  SONUÇ
+═══════════════════════════════════════════════════════════════
+
+✅ Database KESINLIKLE korunur
+✅ 300 ürünü tekrar girmene GEREK YOK
+✅ Tüm satış geçmişi korunur
+✅ Kullanıcılar korunur
+✅ Stok bilgileri korunur
+
+Güncelleme yaparken ENDİŞELENME! 🚀
+
+═══════════════════════════════════════════════════════════════

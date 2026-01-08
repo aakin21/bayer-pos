@@ -1,0 +1,120 @@
+═══════════════════════════════════════════════════════════
+              BAYER POS - KURULUM KILAVUZU
+═══════════════════════════════════════════════════════════
+
+📦 KURULUM YÖNTEMLERİ:
+
+═══════════════════════════════════════════════════════════
+YÖNTEM 1: BUILD EDİLMİŞ VERSİYON (ÖNERİLEN) ⭐
+═══════════════════════════════════════════════════════════
+
+1. Geliştirme bilgisayarında:
+   - BASLAT.bat dosyasını çalıştırın
+   - Build işlemi tamamlandıktan sonra:
+     → local-pos\src-tauri\target\release\bundle\msi\ klasöründe
+     → .msi installer dosyası oluşur
+
+2. USB'ye kopyalayın:
+   - Sadece .msi installer dosyasını kopyalayın
+   - Dosya boyutu: ~50-100 MB
+
+3. Müşterinin laptopunda:
+   - .msi dosyasına çift tıklayın
+   - Kurulum sihirbazını takip edin
+   - Kurulum bitince uygulama otomatik başlar
+
+✅ AVANTAJLAR:
+   - Tek dosya, kolay kurulum
+   - Node.js/Rust gerektirmez
+   - Hızlı başlatma
+   - Profesyonel görünüm
+
+═══════════════════════════════════════════════════════════
+YÖNTEM 2: TÜM KLASÖRÜ KOPYALA (GELİŞTİRME MODU)
+═══════════════════════════════════════════════════════════
+
+1. USB'ye kopyalayın:
+   - Tüm "bayer-pos" klasörünü USB'ye kopyalayın
+   - Klasör boyutu: ~500 MB - 1 GB
+
+2. Müşterinin laptopunda:
+   - USB'den tüm klasörü bilgisayara kopyalayın
+   - ÖNCE GEREKSİNİMLERİ KURUN:
+     → Node.js (LTS versiyonu): https://nodejs.org/
+     → Rust: https://rustup.rs/
+   
+   - KURULUM.BAT dosyasını çalıştırın
+     → Otomatik olarak dependencies kurulur
+   
+   - ÇALIŞTIRMA:
+     → BASLAT.bat dosyasına çift tıklayın
+     → VEYA: local-pos klasöründe "npm run tauri:dev"
+
+⚠️ DİKKAT:
+   - Node.js ve Rust kurulu olmalı
+   - İlk kurulum 5-10 dakika sürebilir
+   - Her açılışta build yapılır (yavaş başlatma)
+
+═══════════════════════════════════════════════════════════
+📋 GEREKSİNİMLER (Yöntem 2 için)
+═══════════════════════════════════════════════════════════
+
+1. Node.js (v18 veya üzeri)
+   - İndir: https://nodejs.org/
+   - LTS versiyonunu seçin
+   - Kurulum sırasında "Add to PATH" seçeneğini işaretleyin
+
+2. Rust (en son versiyon)
+   - İndir: https://rustup.rs/
+   - rustup-init.exe dosyasını çalıştırın
+   - Varsayılan ayarlarla kurun
+
+3. Windows Build Tools (otomatik kurulur)
+   - Visual Studio Build Tools
+   - Rust kurulumu sırasında otomatik indirilir
+
+═══════════════════════════════════════════════════════════
+💾 VERİTABANI KONUMU
+═══════════════════════════════════════════════════════════
+
+Yöntem 1 (Build edilmiş):
+   → C:\Users\[Kullanıcı]\AppData\Roaming\com.bayer.pos\pos.db
+
+Yöntem 2 (Geliştirme modu):
+   → local-pos\src-tauri\target\debug\pos.db
+   → VEYA: local-pos\src-tauri\target\release\pos.db
+
+═══════════════════════════════════════════════════════════
+🔄 YEDEKLEME
+═══════════════════════════════════════════════════════════
+
+ÖNEMLİ: Veritabanı dosyasını (pos.db) düzenli olarak yedekleyin!
+
+Yedekleme yöntemi:
+   1. pos.db dosyasını bulun
+   2. USB'ye veya buluta kopyalayın
+   3. Tarihli isim verin: pos_backup_2025-01-15.db
+
+═══════════════════════════════════════════════════════════
+❓ SORUN GİDERME
+═══════════════════════════════════════════════════════════
+
+Problem: "Node.js bulunamadı"
+Çözüm: Node.js'i kurun ve bilgisayarı yeniden başlatın
+
+Problem: "Rust bulunamadı"
+Çözüm: Rust'ı kurun ve terminal'i yeniden açın
+
+Problem: "Build başarısız"
+Çözüm: 
+   - İnternet bağlantınızı kontrol edin
+   - Antivirus'ü geçici olarak kapatın
+   - Yönetici olarak çalıştırın
+
+Problem: "Uygulama açılmıyor"
+Çözüm:
+   - Windows Defender'ı kontrol edin
+   - Güvenlik duvarı ayarlarını kontrol edin
+   - Yönetici olarak çalıştırmayı deneyin
+
+═══════════════════════════════════════════════════════════

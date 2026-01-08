@@ -1,0 +1,99 @@
+═══════════════════════════════════════════════════════════════
+  BAYER POS - GÜNCELLEME KILAVUZU
+═══════════════════════════════════════════════════════════════
+
+📦 GÜNCELLEME SÜRECİ
+═══════════════════════════════════════════════════════════════
+
+1. KENDİ PC'NDE GÜNCELLEME YAP
+   ────────────────────────────────────────────────────────────
+   ✅ Kod değişikliklerini yap
+   ✅ Test et (npm run tauri:dev)
+   ✅ Versiyon numarasını artır:
+      • local-pos/src-tauri/tauri.conf.json → "version": "1.0.1"
+      • local-pos/src-tauri/Cargo.toml → version = "1.0.1"
+      • local-pos/package.json → "version": "1.0.1"
+   
+2. YENİ INSTALLER OLUŞTUR
+   ────────────────────────────────────────────────────────────
+   cd local-pos
+   npm run tauri:build
+   
+   📁 Installer şurada oluşur:
+   local-pos/src-tauri/target/release/bundle/msi/
+   → bayer-pos_1.0.1_x64_en-US.msi
+
+3. MÜŞTERİYE GÖNDER
+   ────────────────────────────────────────────────────────────
+   ✅ Sadece yeni .msi dosyasını gönder (USB/Email/Cloud)
+   ✅ Müşteri eski versiyonu kaldırmadan yeni installer'ı çalıştırabilir
+   ✅ Windows otomatik olarak eski versiyonu günceller
+   ✅ DATABASE KORUNUR (veriler kaybolmaz!)
+
+═══════════════════════════════════════════════════════════════
+  ÖNEMLİ NOTLAR
+═══════════════════════════════════════════════════════════════
+
+✅ Database Konumu:
+   • Database: %APPDATA%\com.bayer.pos\pos.db
+   • Güncelleme sırasında database KORUNUR
+   • Sadece uygulama dosyaları güncellenir
+
+✅ Versiyon Numarası:
+   • Her güncellemede versiyon numarasını artır
+   • Örnek: 1.0.0 → 1.0.1 → 1.0.2 → 1.1.0
+
+✅ Müşteri Tarafı:
+   • Eski versiyonu kapat
+   • Yeni .msi dosyasını çalıştır
+   • "Install" butonuna bas
+   • Windows otomatik günceller
+   • Uygulamayı aç → Veriler yerinde!
+
+═══════════════════════════════════════════════════════════════
+  HIZLI GÜNCELLEME SCRIPTİ
+═══════════════════════════════════════════════════════════════
+
+Windows için otomatik build scripti oluşturabilirsin:
+
+GUNCELLEME-BUILD.bat:
+───────────────────────────────────────────────────────────────
+@echo off
+echo ========================================
+echo  BAYER POS - GUNCELLEME BUILD
+echo ========================================
+echo.
+
+cd local-pos
+
+echo [1/3] Versiyon kontrol ediliyor...
+echo.
+
+echo [2/3] Build baslatiliyor...
+call npm run tauri:build
+
+echo.
+echo [3/3] Build tamamlandi!
+echo.
+echo Installer konumu:
+echo local-pos\src-tauri\target\release\bundle\msi\
+echo.
+pause
+───────────────────────────────────────────────────────────────
+
+═══════════════════════════════════════════════════════════════
+  ALTERNATIF: OTOMATIK GUNCELLEME (İLERİ SEVIYE)
+═══════════════════════════════════════════════════════════════
+
+Eğer profesyonel bir otomatik güncelleme sistemi istersen:
+
+1. Update Server Kur (örn: GitHub Releases, S3, kendi server)
+2. Tauri Update Plugin ekle
+3. Uygulama açılışta otomatik kontrol eder
+4. Kullanıcı "Güncelle" butonuna basar
+5. Otomatik indirip kurar
+
+⚠️ Bu daha karmaşık ve server gerektirir.
+   Basit kullanım için yukarıdaki yöntem yeterli.
+
+═══════════════════════════════════════════════════════════════

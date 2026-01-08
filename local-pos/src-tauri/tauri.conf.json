@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.tauri.app/config/2.0",
+  "productName": "Bayer POS",
+  "version": "1.0.0",
+  "identifier": "com.bayer.pos",
+  "build": {
+    "frontendDist": "../dist",
+    "beforeBuildCommand": "npm run build",
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:5173"
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "resources": ["../dist"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": "",
+      "wix": {
+        "bannerPath": null,
+        "fipsCompliant": false
+      }
+    }
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Bayer POS Sistemi",
+        "width": 1400,
+        "height": 900,
+        "resizable": true,
+        "fullscreen": false,
+        "maximized": true
+      }
+    ],
+    "security": {
+      "csp": null,
+      "capabilities": ["sql-all"]
+    }
+  },
+  "plugins": {
+    "sql": {
+      "preload": ["sqlite:pos.db"]
+    }
+  }
+}

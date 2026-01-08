@@ -1,0 +1,94 @@
+═══════════════════════════════════════════════════════════
+              BAYER POS - KULLANIM KILAVUZU
+═══════════════════════════════════════════════════════════
+
+📌 BAŞLATMA:
+   1. BAŞLAT.bat dosyasına çift tıklayın
+   2. POS uygulaması otomatik açılacak
+
+📌 GİRİŞ BİLGİLERİ:
+
+   🔐 ADMIN GİRİŞİ:
+      Kullanıcı Adı: admin
+      Şifre: admin123
+
+   👤 ÇALIŞAN GİRİŞİ:
+      Kullanıcı Adı: calisan
+      Şifre: calisan123
+
+═══════════════════════════════════════════════════════════
+
+📋 ÖZELLİKLER:
+
+   ✅ Satış Yap - Ürün satışı, barkod okutma, ödeme alma
+   ✅ İade İşlemleri - Fiş numarasıyla iade
+   ✅ Raporlar - Satış raporları, kar/zarar analizi
+   ✅ Stok Ayarlama - Ürün ekleme, stok düzenleme (Sadece Admin)
+   ✅ Kullanıcılar - Kullanıcı yönetimi (Sadece Admin)
+
+═══════════════════════════════════════════════════════════
+
+⚙️ SİSTEM ÖZELLİKLERİ:
+
+   • Tek şube sistemi (backend yok)
+   • Tamamen offline çalışır
+   • Tüm veriler yerel SQLite veritabanında saklanır
+   • İnternet bağlantısı gerektirmez
+   • Aktivasyon gerektirmez
+
+═══════════════════════════════════════════════════════════
+
+🛒 SATIŞ YAPMA:
+
+   1. "Satış Yap" menüsüne tıklayın
+   2. Barkod okutun veya ürün adı ile arayın
+   3. Ürünü sepete ekleyin
+   4. "Ödeme Al" butonuna tıklayın
+   5. Nakit/Kart seçip tutarı girin
+   6. Satışı tamamlayın
+
+═══════════════════════════════════════════════════════════
+
+📦 STOK YÖNETİMİ (Admin):
+
+   1. "Stok Ayarlama" menüsüne gidin
+   2. "➕ Yeni Ürün Ekle" ile ürün ekleyin
+   3. Barkod, isim, fiyat bilgilerini girin
+   4. Stok miktarını ayarlayın
+
+═══════════════════════════════════════════════════════════
+
+↩️ İADE YAPMA:
+
+   1. "İade İşlemleri" menüsüne gidin
+   2. Fiş numarasını girin
+   3. İade edilecek ürünleri seçin
+   4. İade sebebini yazın
+   5. Onaylayın
+
+═══════════════════════════════════════════════════════════
+
+📊 RAPORLAR:
+
+   • Günlük satış raporları
+   • Toplam ciro ve kar görüntüleme
+   • Ürün bazlı satış analizi
+   • Vardiya raporları
+
+═══════════════════════════════════════════════════════════
+
+❌ KAPATMA:
+
+   1. KAPAT.bat dosyasına çift tıklayın
+   VEYA
+   2. POS uygulamasını kapatın (X butonu)
+
+═══════════════════════════════════════════════════════════
+
+💡 İPUCU:
+
+   • Şifreleri değiştirmek için Login.svelte dosyasını düzenleyin
+   • Veriler pos.db dosyasında saklanır
+   • Yedek almayı unutmayın!
+
+═══════════════════════════════════════════════════════════
