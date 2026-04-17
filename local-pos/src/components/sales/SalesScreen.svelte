@@ -194,7 +194,6 @@
               <button class="product-card" on:click={() => selectProduct(product)}>
                 <div class="product-info">
                   <div class="product-name">{product.name}</div>
-                  <div class="product-barcode">Barkodsuz</div>
                 </div>
                 <div class="product-price">₺{product.sale_price.toFixed(2)}</div>
               </button>
@@ -576,6 +575,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   @media (max-height: 600px) {
@@ -603,10 +604,11 @@
   }
 
   .product-price {
-    font-size: 18px;
+    font-size: 12px;
     font-weight: 700;
     color: #667eea;
-    margin-top: 10px;
+    margin-top: 4px;
+    white-space: nowrap;
   }
 
   /* Payment Modal */

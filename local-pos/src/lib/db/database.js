@@ -544,7 +544,7 @@ export const stockRepo = {
       return false;
     }
 
-    const newQuantity = Math.max(0, stock.quantity - quantity);
+    const newQuantity = stock.quantity - quantity;
     return await this.updateQuantity(productId, newQuantity);
   },
 
