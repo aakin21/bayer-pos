@@ -9,7 +9,7 @@ echo ============================================================
 echo.
 
 REM Ana dizine gec
-cd /d "%~dp0"
+cd /d "%~dp0.."
 echo Calisma dizini: %CD%
 echo.
 

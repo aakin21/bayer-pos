@@ -5,7 +5,7 @@ echo  BAYER POS - GÜNCELLEME BUILD
 echo ========================================
 echo.
 
-cd local-pos
+cd /d "%~dp0..\local-pos"
 
 echo [1/3] Versiyon kontrol ediliyor...
 echo.
