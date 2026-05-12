@@ -5,6 +5,9 @@
   let users = [];
   let showModal = false;
   let editingUser = null;
+  let isEditingAdmin = false;
+  let currentPasswordInput = '';
+  let modalError = '';
 
   onMount(async () => {
     await loadUsers();
@@ -27,13 +30,39 @@
   }
 
   function addUser() {
+    isEditingAdmin = false;
     editingUser = { username: '', password: '', full_name: '', role: 'staff', is_active: 1 };
     showModal = true;
   }
 
+  function editAdmin(u) {
+    isEditingAdmin = true;
+    editingUser = { ...u, password: '' };
+    currentPasswordInput = '';
+    modalError = '';
+    showModal = true;
+  }
+
   async function saveUser() {
+    modalError = '';
     try {
-      await userRepo.upsert(editingUser);
+      if (isEditingAdmin) {
+        if (!editingUser.full_name) { modalError = 'Ad Soyad boş olamaz'; return; }
+        if (!currentPasswordInput) { modalError = 'Mevcut şifreyi girmeniz gerekiyor'; return; }
+        const adminInDb = await userRepo.findByUsername(editingUser.username);
+        if (!adminInDb || adminInDb.password !== currentPasswordInput) {
+          modalError = 'Mevcut şifre yanlış';
+          return;
+        }
+        const toSave = { ...editingUser };
+        if (!toSave.password) delete toSave.password;
+        await userRepo.upsert(toSave);
+      } else {
+        if (!editingUser.username || !editingUser.password || !editingUser.full_name) {
+          alert('Tüm alanları doldurun'); return;
+        }
+        await userRepo.upsert(editingUser);
+      }
       showModal = false;
       await loadUsers();
     } catch (e) {
@@ -107,13 +136,11 @@
               <span class="badge badge-inactive">Pasif</span>
             {/if}
           </div>
-          <div>
+          <div class="actions-cell">
             {#if u.role === 'staff'}
-              <button class="btn-delete" on:click={() => deleteUser(u.id, u.full_name, u.role)}>
-                Sil
-              </button>
+              <button class="btn-delete" on:click={() => deleteUser(u.id, u.full_name, u.role)}>Sil</button>
             {:else}
-              <span class="badge badge-protected">Korumalı</span>
+              <button class="btn-edit" on:click={() => editAdmin(u)}>Düzenle</button>
             {/if}
           </div>
         </div>
@@ -125,13 +152,23 @@
 {#if showModal}
   <div class="modal-overlay">
     <div class="modal">
-      <h3>Kullanıcı Ekle/Düzenle</h3>
+      <h3>{isEditingAdmin ? 'Yönetici Bilgilerini Düzenle' : 'Yeni Kullanıcı Ekle'}</h3>
       <input bind:value={editingUser.full_name} placeholder="Ad Soyad" />
-      <input bind:value={editingUser.username} placeholder="Kullanıcı Adı" />
-      <input type="password" bind:value={editingUser.password} placeholder="Şifre" />
-      <div class="info-text">
-        <small>💡 Not: Sadece personel hesabı oluşturabilirsiniz</small>
-      </div>
+      {#if !isEditingAdmin}
+        <input bind:value={editingUser.username} placeholder="Kullanıcı Adı" />
+      {/if}
+      {#if isEditingAdmin}
+        <input type="password" bind:value={currentPasswordInput} placeholder="Mevcut Şifre (zorunlu)" />
+        <input type="password" bind:value={editingUser.password} placeholder="Yeni Şifre (boş bırakırsan değişmez)" />
+      {:else}
+        <input type="password" bind:value={editingUser.password} placeholder="Şifre" />
+        <div class="info-text">
+          <small>💡 Not: Sadece personel hesabı oluşturabilirsiniz</small>
+        </div>
+      {/if}
+      {#if modalError}
+        <div class="modal-error">⚠️ {modalError}</div>
+      {/if}
       <button on:click={saveUser}>Kaydet</button>
       <button on:click={() => showModal = false}>İptal</button>
     </div>
@@ -157,8 +194,11 @@
   .badge-inactive { background: #ffcdd2; color: #c62828; }
   .badge-protected { background: #f5f5f5; color: #757575; font-size: 11px; }
 
+  .actions-cell { display: flex; gap: 6px; }
   .btn-delete { padding: 6px 16px; background: #f44336; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.3s; }
   .btn-delete:hover { background: #d32f2f; transform: translateY(-1px); }
+  .btn-edit { padding: 6px 16px; background: #ff9800; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.3s; }
+  .btn-edit:hover { background: #f57c00; transform: translateY(-1px); }
   .empty-state { text-align: center; padding: 40px; color: #999; }
   .empty-state p { margin: 0 0 8px 0; font-size: 16px; }
   .empty-state small { color: #bbb; }
@@ -173,4 +213,5 @@
   .modal button:last-child:hover { background: #e0e0e0; }
   .info-text { padding: 8px; background: #e3f2fd; border-radius: 6px; }
   .info-text small { color: #1976d2; }
+  .modal-error { padding: 8px 12px; background: #fee; color: #c33; border-radius: 6px; font-size: 13px; border-left: 3px solid #c33; }
 </style>

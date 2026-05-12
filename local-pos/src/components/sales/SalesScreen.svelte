@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { cart, addToCart, clearCart, selectedQuantity } from '../../stores/appStore.js';
+  import { cart, addToCart, clearCart, selectedQuantity, user } from '../../stores/appStore.js';
   import { productRepo, stockRepo } from '../../lib/db/database.js';
   import { v4 as uuidv4 } from 'uuid';
 
@@ -178,9 +178,11 @@
     <div class="barcodeless-section">
       <div class="category-header">
         <h3>📦 Barkodsuz Ürünler</h3>
-        <button class="btn-add-barcodeless" on:click={() => openNewProductModal()}>
-          ➕ Yeni Ekle
-        </button>
+        {#if $user?.role === 'admin'}
+          <button class="btn-add-barcodeless" on:click={() => openNewProductModal()}>
+            ➕ Yeni Ekle
+          </button>
+        {/if}
       </div>
       <div class="products-list">
         {#if barcodelessProducts.length === 0}

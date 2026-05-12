@@ -225,6 +225,11 @@
     currentMenu = menu;
   }
 
+  // Login olunca menüyü sıfırla
+  $: if ($currentView === 'pos') {
+    currentMenu = 'sales';
+  }
+
   function toggleSidebar() {
     sidebarOpen = !sidebarOpen;
   }
@@ -597,7 +602,7 @@
             <StockAlerts />
           {:else if currentMenu === 'stock'}
             <StockAdjustment bind:pendingBarcode={pendingBarcodeForStock} />
-          {:else if currentMenu === 'users'}
+          {:else if currentMenu === 'users' && $user?.role === 'admin'}
             <UserManagement />
           {/if}
         </div>

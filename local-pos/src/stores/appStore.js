@@ -33,7 +33,6 @@ export const globalBarcodeEvent = writable(null); // { barcode: string, timestam
 export function login(userData) {
   user.set(userData);
   currentView.set('pos');
-  localStorage.setItem('user', JSON.stringify(userData));
 
   // Set user role in database module
   import('../lib/db/database.js').then(db => db.setCurrentUser(userData));
@@ -42,7 +41,6 @@ export function login(userData) {
 export function logout() {
   user.set(null);
   currentView.set('login');
-  localStorage.removeItem('user');
 }
 
 export function addToCart(product, quantity = 1) {
@@ -171,20 +169,7 @@ export function initializeApp() {
     // Load printer settings
     loadPrinterSettings();
 
-    const savedUser = localStorage.getItem('user');
-
-    if (savedUser) {
-      console.log('User logged in, showing POS');
-      const userData = JSON.parse(savedUser);
-      user.set(userData);
-      currentView.set('pos');
-
-      // Set user role in database module
-      import('../lib/db/database.js').then(db => db.setCurrentUser(userData));
-    } else {
-      console.log('Showing login screen');
-      currentView.set('login');
-    }
+    currentView.set('login');
   } catch (error) {
     console.error('ERROR in initializeApp:', error);
     currentView.set('login');

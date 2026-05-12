@@ -766,6 +766,14 @@ export const userRepo = {
     const id = user.id || uuidv4();
     const now = new Date().toISOString();
 
+    if (user.id && !user.password) {
+      await db.execute(
+        `UPDATE users SET full_name = $1, updated_at = $2 WHERE id = $3`,
+        [user.full_name, now, user.id]
+      );
+      return user.id;
+    }
+
     await db.execute(
       `INSERT INTO users (id, username, password, full_name, role, store_id, is_active, created_at, updated_at)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
